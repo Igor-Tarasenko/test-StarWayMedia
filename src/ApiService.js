@@ -10,11 +10,10 @@ const apiKey = 'c596fd9a2bdde543f91ec6b94a4c0c3c';
 export class ApiService {
     static async searchMovies(search) {
         try {
-            const formattedSearch = search.replace(' ', '+');
             const { data } = await axiosInstance.get('search/movie', {
                 params: {
                     api_key: apiKey,
-                    query: formattedSearch
+                    query: search
                 }
             });
             return data;

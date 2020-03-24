@@ -5,20 +5,19 @@ import PageNotFound from "./PageNotFound";
 
 
 export default class CurrentFilm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            movie: null,
-            isLoaded: true,
-            isError: false
-        }
-    }
+    state = {
+        movie: null,
+        isLoaded: true,
+        isError: false,
+        posterImg: null
+    };
 
     async componentDidMount() {
         try {
-            const movie = await ApiService.getMovieById(this.props.match.params.id);
+            const { data } = await ApiService.getMovieById(this.props.match.params.id);
             this.setState({
-                movie,
+                movie: data,
+                posterImg: data.poster_path,
                 isLoaded: !this.state.isLoaded
             })
         } catch(e) {
@@ -36,12 +35,7 @@ export default class CurrentFilm extends Component {
         } else if (this.state.isError) {
             return <PageNotFound />
         }
-        let posterImg ="";
-        if (this.state.movie.data.poster_path == null) {
-            posterImg = image;
-        } else {
-            posterImg = "https://image.tmdb.org/t/p/w500" + this.state.movie.data.poster_path;
-        }
+        const posterImg = this.state.posterImg ? `https://image.tmdb.org/t/p/w500${this.state.posterImg}` : image;
         return (
             <div className="container">
                 <div className="row">
@@ -52,16 +46,16 @@ export default class CurrentFilm extends Component {
                                     <img src={posterImg} alt="film_poster" className="poster"/>
                                 </div>
                                 <div className="col-md-8">
-                                    <h2 className="title">{this.state.movie.data.original_title}</h2>
-                                    <p className="description mr-block">{this.state.movie.data.overview}</p>
+                                    <h2 className="title">{this.state.movie.original_title}</h2>
+                                    <p className="description mr-block">{this.state.movie.overview}</p>
                                     <div className="flex-block mr-block">
                                         <p>Budget:</p>
-                                        <p>{this.state.movie.data.budget} $</p>
+                                        <p>{this.state.movie.budget} $</p>
                                     </div>
                                     <div className="flex-block mr-block">
                                         <p>Genre:</p>
                                         <p className="type-of-genre">{
-                                            this.state.movie.data.genres.map((genre, index) => {
+                                            this.state.movie.genres.map((genre, index) => {
                                                 return (
                                                     <span key={index}>{genre.name}</span>
                                                 )
@@ -70,15 +64,15 @@ export default class CurrentFilm extends Component {
                                     </div>
                                     <div className="flex-block mr-block">
                                         <p>Date release:</p>
-                                        <p>{this.state.movie.data.release_date}</p>
+                                        <p>{this.state.movie.release_date}</p>
                                     </div>
                                     <div className="flex-block mr-block">
                                         <p>Rating</p>
-                                        <p>{this.state.movie.data.vote_average}</p>
+                                        <p>{this.state.movie.vote_average}</p>
                                     </div>
                                     <div className="flex-block mr-block">
                                         <p>Language:</p>
-                                        <p>{this.state.movie.data.spoken_languages[0].name}</p>
+                                        <p>{this.state.movie.spoken_languages[0].name}</p>
                                     </div>
                                 </div>
                             </div>

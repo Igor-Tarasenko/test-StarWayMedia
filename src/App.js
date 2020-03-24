@@ -12,7 +12,8 @@ class App extends Component {
     };
 
     handleChange = debounce(async (text) => {
-        const movies = await ApiService.searchMovies(text);
+        const formattedSearch = text.replace(' ', '+');
+        const movies = await ApiService.searchMovies(formattedSearch);
         await this.setState({ movies })
     }, 500);
 
@@ -30,7 +31,7 @@ class App extends Component {
                                     (this.state.movies.results.length) ?
                                         this.state.movies.results.map((movie, index) => {
                                             return (
-                                                <Link key={movie.id} className="col-lg-4" to={`/`+ movie.id}>
+                                                <Link key={movie.id} className="col-lg-4" to={`/films/${movie.id}`}>
                                                     <FilmCard
                                                         filmName={movie.title}
                                                         id={movie.id}
