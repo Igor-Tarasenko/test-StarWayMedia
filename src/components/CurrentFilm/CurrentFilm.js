@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import image from '../FilmCard/image-not-available.png'
 import {ApiService} from "../../ApiService";
+import PageNotFound from "./PageNotFound";
 
 
 export default class CurrentFilm extends Component {
@@ -33,8 +34,9 @@ export default class CurrentFilm extends Component {
         if (this.state.isLoaded) {
             return <div>Loading...</div>
         } else if (this.state.isError) {
-            return <div className="error">Ooops.. Page not found</div>
-        }let posterImg ="";
+            return <PageNotFound />
+        }
+        let posterImg ="";
         if (this.state.movie.data.poster_path == null) {
             posterImg = image;
         } else {
@@ -58,7 +60,7 @@ export default class CurrentFilm extends Component {
                                     </div>
                                     <div className="flex-block mr-block">
                                         <p>Genre:</p>
-                                        <p>{
+                                        <p className="type-of-genre">{
                                             this.state.movie.data.genres.map((genre, index) => {
                                                 return (
                                                     <span key={index}>{genre.name}</span>

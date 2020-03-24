@@ -25,6 +25,10 @@ p {
   color: #ff0000;
   font-size: 18px;
   text-align: center;
+  margin-top: 20px;
+  .big-text {
+    font-size: 100px;
+  }
 }
 @import './components/FilmCard/FilmCard';
 @import './components/CurrentFilm/CurrentFilm';
