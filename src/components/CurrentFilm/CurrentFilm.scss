@@ -1,0 +1,30 @@
+.currentFilmBlock {
+  padding: 40px 0;
+  .title {
+    font-weight: 800;
+  }
+  .img-block {
+    img {
+      width: 100%;
+    }
+  }
+  .mr-block {
+    margin: 20px 0;
+  }
+  .flex-block {
+    display: flex;
+    justify-content: flex-start;
+    p {
+      &:first-child {
+        margin-right: 15px;
+        font-weight: 800;
+      }
+      span {
+        margin-right: 5px;
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
